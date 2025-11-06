@@ -24,6 +24,24 @@
       "dependencies": {},
       "hash": "6fa58d3773ef039ea9563454928c235bb308ad8f"
     },
+    "com.google.firebase.app": {
+      "version": "https://github.com/RageAgainstThePixel/com.google.firebase.app.git#13.4.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.external-dependency-manager": "1.2.186"
+      },
+      "hash": "668f15a2673ea873840fb141cd26e79233252b98"
+    },
+    "com.google.firebase.auth": {
+      "version": "https://github.com/RageAgainstThePixel/com.google.firebase.auth.git#13.4.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.firebase.app": "13.4.0"
+      },
+      "hash": "49ffef8ce18c32d8cac9c4d349dec6312375815f"
+    },
     "com.iafahim.ludo-sharp": {
       "version": "file:com.iafahim.ludo-sharp",
       "depth": 0,

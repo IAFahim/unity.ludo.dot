@@ -52,6 +52,8 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
+    "com.unity.modules.xr": "1.0.0",
+    "com.google.firebase.auth": "https://github.com/RageAgainstThePixel/com.google.firebase.auth.git#13.4.0",
+    "com.google.firebase.app": "https://github.com/RageAgainstThePixel/com.google.firebase.app.git#13.4.0"
   }
 }
