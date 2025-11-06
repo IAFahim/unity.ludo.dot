@@ -1,7 +1,10 @@
 {
   "dependencies": {
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+    "com.google.ads.mobile": "https://github.com/googleads/googleads-mobile-unity.git?path=packages/com.google.ads.mobile#v10.5.0",
+    "com.google.external-dependency-manager": "https://github.com/googlesamples/unity-jar-resolver.git?path=upm#v1.2.186",
     "com.iafahim.ludo-sharp": "file:/Users/betopia/GitHub/Ludo-Sharp",
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.9",
     "com.unity.collab-proxy": "2.10.0",
     "com.unity.collections": "2.6.3",

@@ -250,11 +250,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 145815987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1 &145815983
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,56 +623,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &587447938
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 587447940}
-  - component: {fileID: 587447939}
-  m_Layer: 0
-  m_Name: QHierarchyObjectList
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &587447939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587447938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 845e8bd83609e3549af5a311ad811681, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: HierarchyRuntime::VirtueSky.Hierarchy.ObjectList
-  lockedObjects: []
-  editModeVisibileObjects: []
-  editModeInvisibleObjects: []
-  wireframeHiddenObjects: []
-  gameObjectColorKeys: []
-  gameObjectColorValues: []
---- !u!4 &587447940
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587447938}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &662921854
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,8 +707,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 42
+  m_fontSizeBase: 42
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -858,6 +808,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1537750752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1537750754}
+  - component: {fileID: 1537750753}
+  m_Layer: 0
+  m_Name: QHierarchyObjectList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1537750753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537750752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 845e8bd83609e3549af5a311ad811681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: HierarchyRuntime::VirtueSky.Hierarchy.ObjectList
+  lockedObjects: []
+  editModeVisibileObjects: []
+  editModeInvisibleObjects: []
+  wireframeHiddenObjects: []
+  gameObjectColorKeys:
+  - {fileID: 2025781253}
+  gameObjectColorValues:
+  - {r: 0.9764706, g: 0.011764706, b: 0, a: 1}
+--- !u!4 &1537750754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537750752}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1734989773
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,7 +918,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1863605805}
   - component: {fileID: 1863605804}
-  - component: {fileID: 1863605803}
+  - component: {fileID: 1863605806}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -924,18 +926,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1863605803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1863605802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
 --- !u!114 &1863605804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -966,6 +956,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1863605806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863605802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.StandaloneInputModule
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!1 &1925422470
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,7 +989,7 @@ GameObject:
   - component: {fileID: 1925422473}
   - component: {fileID: 1925422472}
   m_Layer: 5
-  m_Name: Login
+  m_Name: Sign In
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1002,8 +1012,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -670}
-  m_SizeDelta: {x: 385.641, y: 72.308}
+  m_AnchoredPosition: {x: 0, y: -868}
+  m_SizeDelta: {x: 385.641, y: 140.525}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1925422472
 MonoBehaviour:
@@ -1069,7 +1079,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: ade1f08b3234649248afc25904fa74f1, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1078,7 +1088,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 10
 --- !u!222 &1925422474
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1096,7 +1106,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2025781255}
-  - component: {fileID: 2025781254}
   - component: {fileID: 2025781256}
   m_Layer: 0
   m_Name: Coin Controller
@@ -1105,22 +1114,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2025781254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2025781253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc6371bab88545c49369cc5f55d28eda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Ui.Runtime::LudoGame.CoinSystem.CoinRenderer
-  coinPanel: {fileID: 0}
-  coinText: {fileID: 81572684}
-  loadingIndicator: {fileID: 0}
-  errorText: {fileID: 0}
 --- !u!4 &2025781255
 Transform:
   m_ObjectHideFlags: 0
@@ -1130,8 +1123,8 @@ Transform:
   m_GameObject: {fileID: 2025781253}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -540, y: -1075.0459, z: 0}
-  m_LocalScale: {x: 3.3027523, y: 3.3027523, z: 3.3027523}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 145815987}
@@ -1145,11 +1138,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2025781253}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4354594b3c874bb58433f558c041ffe7, type: 3}
+  m_Script: {fileID: 11500000, guid: b081639507e54446a18fdf2b81e190bd, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Ui.Runtime::LudoGame.CoinSystem.CoinController
+  m_EditorClassIdentifier: Ui.Runtime::DefaultNamespace.CoinController
   coinVariable: {fileID: 11400000, guid: eb04787ac735a4ce084d68a0699872d8, type: 2}
-  coinRenderer: {fileID: 2025781254}
+  coinTextRenderer: {fileID: 81572683}
+  coinText: {fileID: 81572684}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1160,4 +1154,4 @@ SceneRoots:
   - {fileID: 1734989774}
   - {fileID: 1863605805}
   - {fileID: 145815987}
-  - {fileID: 587447940}
+  - {fileID: 1537750754}
