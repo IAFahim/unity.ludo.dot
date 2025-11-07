@@ -55,9 +55,6 @@ namespace ElProfesorKudo.Firebase.Core
                         {
                             CustomLogger.LogDebug("User already logged in at startup: " + _currentUser.UserId);
                         }
-#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
-                        FirebasePushNotificationManager.Instance.InitFirebaseMessaging();
-#endif
                         _isInitialized = true;
                         CustomLogger.LogInfo("Firebase initialized.");
                         FirebaseCallbacks.InvokeFirebaseReady();

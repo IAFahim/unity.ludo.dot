@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "152386388199-8md14ep7092ul9h4ce5c85q1ap4i6qsn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.coreloopstudio",
+            "certificate_hash": "6fc462498c4bc3945785e8d1f6b266f3f1833f42"
+          }
+        },
+        {
           "client_id": "152386388199-3lctehml9rubg3bqr8q4oh0fbv922iqk.apps.googleusercontent.com",
           "client_type": 3
         }

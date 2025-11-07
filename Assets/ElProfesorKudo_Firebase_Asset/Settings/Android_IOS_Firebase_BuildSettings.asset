@@ -24,9 +24,11 @@ MonoBehaviour:
   AllowApplyXcodeProjectSettings: 1
   AllowGenerateShellScript: 1
   AllowAutoRunShellScript: 1
+  IOSNotificationSoundName: alert.wav
+  UseCustomIOSNotificationSound: 1
   AllowInjectManifestData: 1
   AllowInjectManifestDataAndroid: 1
-  AndroidWebClientID: 
+  AndroidWebClientID: 152386388199-3lctehml9rubg3bqr8q4oh0fbv922iqk.apps.googleusercontent.com
   AllowInjectManifestDataIos: 1
   AndroidAppleRedirectUri: 
   AndroidRedirectHost: 
@@ -43,3 +45,4 @@ MonoBehaviour:
     minimizing exposure.\n- Follow these guidelines to keep your app and users safe."
   AppleClientID: 
   AppleCloudFunctionUrl: 
+  AndroidNotificationSoundName: alert
