@@ -15,9 +15,9 @@ MonoBehaviour:
   GameObjectReceiverName: GameObjectReceiver
   AllowUpdateGameObjectReceiverName: 1
   AllowAutoTrimClientIDs: 1
-  WebClientID: 
+  WebClientID: 152386388199-3lctehml9rubg3bqr8q4oh0fbv922iqk.apps.googleusercontent.com
   AllowUpdateSwiftWebClientID: 1
-  GIDClientID: 
+  GIDClientID: 152386388199-1skta60ukl4h4gl8q120m7olde9nkqc5.apps.googleusercontent.com
   AllowUpdateInfoPlist: 1
   AllowInjectFirebaseInit: 1
   AllowOverridePodfile: 1

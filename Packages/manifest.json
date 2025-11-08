@@ -1,8 +1,9 @@
 {
   "dependencies": {
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
-    "com.google.ads.mobile": "https://github.com/googleads/googleads-mobile-unity.git?path=packages/com.google.ads.mobile#v10.5.0",
     "com.google.external-dependency-manager": "https://github.com/googlesamples/unity-jar-resolver.git?path=upm#v1.2.186",
+    "com.google.firebase.app": "https://github.com/RageAgainstThePixel/com.google.firebase.app.git#13.4.0",
+    "com.google.firebase.auth": "https://github.com/RageAgainstThePixel/com.google.firebase.auth.git#13.4.0",
     "com.iafahim.ludo-sharp": "file:/Users/betopia/GitHub/Ludo-Sharp",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.9",
@@ -52,8 +53,6 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.google.firebase.auth": "https://github.com/RageAgainstThePixel/com.google.firebase.auth.git#13.4.0",
-    "com.google.firebase.app": "https://github.com/RageAgainstThePixel/com.google.firebase.app.git#13.4.0"
+    "com.unity.modules.xr": "1.0.0"
   }
 }
