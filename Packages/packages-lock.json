@@ -32,14 +32,6 @@
       },
       "hash": "49ffef8ce18c32d8cac9c4d349dec6312375815f"
     },
-    "com.iafahim.ludo-sharp": {
-      "version": "file:com.iafahim.ludo-sharp",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.ext.nunit": "1.0.0"
-      }
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

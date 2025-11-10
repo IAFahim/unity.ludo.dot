@@ -4,7 +4,6 @@
     "com.google.external-dependency-manager": "https://github.com/googlesamples/unity-jar-resolver.git?path=upm#v1.2.186",
     "com.google.firebase.app": "https://github.com/RageAgainstThePixel/com.google.firebase.app.git#13.4.0",
     "com.google.firebase.auth": "https://github.com/RageAgainstThePixel/com.google.firebase.auth.git#13.4.0",
-    "com.iafahim.ludo-sharp": "file:/Users/betopia/GitHub/Ludo-Sharp",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.9",
     "com.unity.collab-proxy": "2.10.0",
