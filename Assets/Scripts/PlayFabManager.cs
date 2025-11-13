@@ -795,7 +795,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
         }
         else
         {
-            customId = System.Guid.NewGuid().ToString();
+            customId = SystemInfo.deviceUniqueIdentifier;
             PlayerPrefs.SetString("unique_identifier", customId);
         }
 
@@ -808,7 +808,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
         {
             TitleId = PlayFabSettings.TitleId,
             CreateAccount = true,
-            CustomId = customId //SystemInfo.deviceUniqueIdentifier
+            CustomId = customId
         };
 
 

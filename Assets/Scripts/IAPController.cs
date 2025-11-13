@@ -11,7 +11,7 @@ daily assets update for try.
 
 U should buy the asset from home store if u use it in your project!
 */
-
+#if UNITY_PURCHASING
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Purchasing;
@@ -119,3 +119,5 @@ public class IAPController : MonoBehaviour, IStoreListener
         throw new NotImplementedException();
     }
 }
+
+#endif

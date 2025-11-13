@@ -133,14 +133,16 @@ public class GameManager
     public int cuePower = 0;
     public int cueAim = 0;
     public int cueTime = 0;
+#if UNITY_PURCHASING
     public IAPController IAPControl;
+#endif
     public GameObject cueObject;
     public List<string[]> friendsStatuses = new List<string[]>();
     public int opponentCueIndex = 0;
     public int opponentCueTime = 0;
     public ControlAvatars controlAvatars;
 
-   
+
     public ConnectionLostController connectionLost;
     public bool opponentActive = true;
     public IMiniGame miniGame;
@@ -192,15 +194,14 @@ public class GameManager
         PlayersIDs = null;
 
 
-
         ballTouchedBand = 0;
         receivedInitPositions = false;
     }
 
 
-
-
-    private GameManager() { }
+    private GameManager()
+    {
+    }
 
     public static GameManager Instance
     {
@@ -210,6 +211,7 @@ public class GameManager
             {
                 instance = new GameManager();
             }
+
             return instance;
         }
     }
@@ -218,5 +220,4 @@ public class GameManager
     {
         stopTimer = false;
     }
-
 }

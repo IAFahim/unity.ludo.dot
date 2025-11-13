@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 namespace ElProfesorKudo.Firebase.UI
 {
@@ -17,6 +15,7 @@ namespace ElProfesorKudo.Firebase.UI
 
     public class FirebaseAuthUIController : Singleton<FirebaseAuthUIController>
     {
+#if Debug
         [Header("Login UI")]
         [SerializeField] private TMP_InputField _loginEmailInput;
         [SerializeField] private TMP_InputField _loginPasswordInput;
@@ -48,14 +47,17 @@ namespace ElProfesorKudo.Firebase.UI
         [SerializeField] private TextMeshProUGUI _descriptionTextMeshPro;
         [SerializeField] private TMP_InputField _descriptionEditInputField;
         [SerializeField] private Image _profilePictureImage;
+#endif
 
-        [Header("Class Google Sign In IOS - Android")]
-        [SerializeField] private FirebaseGoogleSignInAndroid _androidGoogleSignIn;
+        [Header("Class Google Sign In IOS - Android")] [SerializeField]
+        private FirebaseGoogleSignInAndroid _androidGoogleSignIn;
+
         [SerializeField] private FirebaseGoogleSignInIOS _iosGoogleSignIn;
         private FirebaseAbstractGoogleSignIn _googleSignInHandler;
 
-        [Header("Class Apple Sign In IOS - Android")]
-        [SerializeField] private FirebaseAppleSignInAndroid _androidAppleSignIn;
+        [Header("Class Apple Sign In IOS - Android")] [SerializeField]
+        private FirebaseAppleSignInAndroid _androidAppleSignIn;
+
         [SerializeField] private FirebaseAppleSignInIOS _iosAppleSignIn;
         private FirebaseAbstractAppleSignIn _appleSignInHandler;
 
@@ -74,95 +76,16 @@ namespace ElProfesorKudo.Firebase.UI
 #endif
         }
 
-        #region Show Panel
-        public void ShowLoginPanel()
-        {
-            HideAllPanel();
-            _loginPanel.SetActive(true);
-        }
-        public void ShowRegisterPanel()
-        {
-            HideAllPanel();
-            _registerPanel.SetActive(true);
-        }
-        public void ShowForgetPasswordPanel()
-        {
-            HideAllPanel();
-            _forgetPasswordPanel.SetActive(true);
-        }
-        public void ShowInfoUserPanel()
-        {
-            _uiDataUserPanel.SetActive(true);
-        }
-        public void ShowAppleSignInPanel()
-        {
-            HideAllPanel();
-            _appleSignInPanel.SetActive(true);
-        }
-        public void ShowScorePanel()
-        {
-            HideAllPanel();
-            _scorePanel.SetActive(true);
-        }
-        public void ShowGoogleSignInPanel()
-        {
-            HideAllPanel();
-            _googleSignInPanel.SetActive(true);
-        }
-        #endregion Show Panel
-
-        #region On Click Function
-        public void OnClickLogin()
-        {
-            string email = _loginEmailInput.text;
-            string password = _loginPasswordInput.text;
-
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-            {
-                CustomLogger.LogWarning("Email and password are required for login.");
-                return;
-            }
-
-            FirebaseClassicAuthService.Instance.Login(email, password);
-        }
         public void OnClickLogout()
         {
             FirebaseClassicAuthService.Instance.Logout();
         }
-
-        public void OnClickRegister()
-        {
-            string email = _registerEmailInput.text;
-            string password = _registerPasswordInput.text;
-            string confirmPassword = _registerConfirmPasswordInput.text;
-
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
-            {
-                SetTexNotification("All fields are required for registration.");
-                CustomLogger.LogWarning("All fields are required for registration.");
-                return;
-            }
-
-            if (password != confirmPassword)
-            {
-                SetTexNotification("Passwords do not match.");
-                CustomLogger.LogWarning("Passwords do not match.");
-                return;
-            }
-            SetTexNotification("");
-            CustomLogger.LogInfo("OnRegisterClicked - stacktrace:\n" + Environment.StackTrace);
-            FirebaseClassicAuthService.Instance.Register(email, password);
-        }
-
-        public void OnClickResetPassword()
-        {
-            FirebaseClassicAuthService.Instance.SendPasswordResetEmail(_emailRetrieveInput.text);
-        }
-
+        
         public void OnClickSignInApple()
         {
             _appleSignInHandler.SignIn();
         }
+
         public void OnClickSignOutApple()
         {
             _appleSignInHandler.SignOut();
@@ -173,38 +96,10 @@ namespace ElProfesorKudo.Firebase.UI
         {
             _googleSignInHandler.SignIn();
         }
+
         public void OnClickSignOutGoogle()
         {
             _googleSignInHandler.SignOut();
         }
-
-        #endregion On Click Function
-
-        #region Notification
-
-        public void SetTexNotification(string text)
-        {
-            _notificationTextMeshPro.text = text;
-        }
-
-        #endregion Notification
-
-        #region Panel Management
-
-        public void HideAllPanel()
-        {
-            _uiDataUserPanel.SetActive(false);
-            _loginPanel.SetActive(false);
-            _registerPanel.SetActive(false);
-            _forgetPasswordPanel.SetActive(false);
-            _googleSignInPanel.SetActive(false);
-            _appleSignInPanel.SetActive(false);
-            _scorePanel.SetActive(false);
-            PopUpManager.Instance.ForceClosePopUp();
-            SetTexNotification(null);
-        }
-
-        #endregion Panel Management
-        
     }
 }
