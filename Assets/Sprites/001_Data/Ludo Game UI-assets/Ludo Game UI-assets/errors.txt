@@ -1,0 +1,4 @@
+[2022-10-27 04:04:43] layer "pngfind.com-white-glow-png-1708967": Expected end of input but "-" found.
+[2022-10-27 04:04:43] layer "pngfind.com-white-glow-png-1708967": Expected end of input but "-" found.
+[2022-10-27 04:04:43] layer "pngfind.com-white-glow-png-1708967": Expected end of input but "-" found.
+[2022-10-27 04:04:43] layer "pngfind.com-white-glow-png-1708967": Expected end of input but "-" found.
