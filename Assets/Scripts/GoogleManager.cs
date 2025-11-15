@@ -24,9 +24,12 @@ public class GoogleManager : MonoBehaviour
     // private FirebaseAuth auth;
     // private FirebaseUser user;
 
+    public GameObject[] objectsToDisable; 
+
     private async void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+        FirebaseCallbacks.SubscribeGoogleSignInAndroidSuccess(OnAuthenticationFinished);
 
         // configuration = new GoogleSignInConfiguration
         // {
@@ -54,12 +57,14 @@ public class GoogleManager : MonoBehaviour
         if (PlayerPrefs.GetString("LoggedType") == "Google")
         {
             UpdateStatus("🔹 Attempting Google Auto-Login...");
+            foreach (var o in objectsToDisable)
+            {
+                o.SetActive(false);
+            }
             // GoogleSignIn.Configuration = configuration;
             // GoogleSignIn.DefaultInstance.SignInSilently().ContinueWith(OnAuthenticationFinished);
             playFabManager.Login();
         }
-
-        FirebaseCallbacks.SubscribeGoogleSignInAndroidSuccess(OnAuthenticationFinished);
 //#endif
     }
 
@@ -119,18 +124,7 @@ public class GoogleManager : MonoBehaviour
         // }
         else
         {
-            var user = FirebaseAuth.DefaultInstance.CurrentUser;
-            // GoogleSignInUser user = task.Result;
-            // accessToken = user.IdToken; // ✅ Correct token for Firebase
-            // googleName = user.DisplayName;
-            // googleEmail = user.Email;
-            // googlePhotoUrl = user.ImageUrl?.AbsoluteUri;
-
-            // UpdateStatus($"✅ Google Login Success\nName: {googleName}");
-
-            GameManager.Instance.nameMy = user.DisplayName;
-            var photoUrlAbsoluteUri = user.PhotoUrl?.AbsoluteUri;
-            GameManager.Instance.avatarMyUrl = photoUrlAbsoluteUri;
+            var user = PopulateData(out var photoUrlAbsoluteUri);
             GameManager.Instance.logged = false;
 
             PlayerPrefs.SetString("LoggedType", "Google");
@@ -142,6 +136,23 @@ public class GoogleManager : MonoBehaviour
             // ✅ Function name same, but now works with Firebase
             LoginWithGoogleToPlayFab(user.UserId);
         }
+    }
+
+    private static FirebaseUser PopulateData(out string photoUrlAbsoluteUri)
+    {
+        var user = FirebaseAuth.DefaultInstance.CurrentUser;
+        // GoogleSignInUser user = task.Result;
+        // accessToken = user.IdToken; // ✅ Correct token for Firebase
+        // googleName = user.DisplayName;
+        // googleEmail = user.Email;
+        // googlePhotoUrl = user.ImageUrl?.AbsoluteUri;
+
+        // UpdateStatus($"✅ Google Login Success\nName: {googleName}");
+
+        GameManager.Instance.nameMy = user.DisplayName;
+        photoUrlAbsoluteUri = user.PhotoUrl?.AbsoluteUri;
+        GameManager.Instance.avatarMyUrl = photoUrlAbsoluteUri;
+        return user;
     }
 
     private IEnumerator DownloadProfilePicture(string url)
