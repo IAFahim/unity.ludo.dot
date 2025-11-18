@@ -15,7 +15,7 @@ MonoBehaviour:
   GameObjectReceiverName: GameObjectReceiver
   AllowUpdateGameObjectReceiverName: 1
   AllowAutoTrimClientIDs: 1
-  WebClientID: 152386388199-3lctehml9rubg3bqr8q4oh0fbv922iqk.apps.googleusercontent.com
+  WebClientID: 190615501378-na9qi1vboee8636t6p5ns3tgf2ir685o.apps.googleusercontent.com
   AllowUpdateSwiftWebClientID: 1
   GIDClientID: 152386388199-1skta60ukl4h4gl8q120m7olde9nkqc5.apps.googleusercontent.com
   AllowUpdateInfoPlist: 1
@@ -28,7 +28,7 @@ MonoBehaviour:
   UseCustomIOSNotificationSound: 1
   AllowInjectManifestData: 1
   AllowInjectManifestDataAndroid: 1
-  AndroidWebClientID: 152386388199-3lctehml9rubg3bqr8q4oh0fbv922iqk.apps.googleusercontent.com
+  AndroidWebClientID: 190615501378-na9qi1vboee8636t6p5ns3tgf2ir685o.apps.googleusercontent.com
   AllowInjectManifestDataIos: 1
   AndroidAppleRedirectUri: 
   AndroidRedirectHost: 

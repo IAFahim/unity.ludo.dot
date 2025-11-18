@@ -1,35 +1,53 @@
 {
   "project_info": {
-    "project_number": "152386388199",
-    "project_id": "unity-ludo-login",
-    "storage_bucket": "unity-ludo-login.firebasestorage.app"
+    "project_number": "190615501378",
+    "project_id": "ludodot-5d924",
+    "storage_bucket": "ludodot-5d924.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:152386388199:ios:344be513082b3979476242",
+        "mobilesdk_app_id": "1:190615501378:android:4e3585dbcd98da35bb0bdb",
         "android_client_info": {
-          "package_name": "com.coreloopstudio"
-        }
-      },
-      "api_key": [
-        {
-          "current_key": "AIzaSyD_Kf97_tl9zzlkRVduNvp64id5vdBoRGc"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 0
-        },
-        "appinvite_service": {
-          "status": 1
+          "package_name": "com.zooshaus.ludodot"
         }
       },
       "oauth_client": [
         {
-          "client_id": "152386388199-1skta60ukl4h4gl8q120m7olde9nkqc5.apps.googleusercontent.com"
+          "client_id": "190615501378-f41dgnmnk89hq4tp5i47u6cer65k61vd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zooshaus.ludodot",
+            "certificate_hash": "0190c2a3bc85ec7c947a5e9a28103e4d27840be3"
+          }
+        },
+        {
+          "client_id": "190615501378-na9qi1vboee8636t6p5ns3tgf2ir685o.apps.googleusercontent.com",
+          "client_type": 3
         }
-      ]
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFil-Wl8-0vBGLrJIivej_PQrnRQF3vso"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190615501378-na9qi1vboee8636t6p5ns3tgf2ir685o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190615501378-08fanbhfmci092ppuk4t4gsameuegei5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.zooshaus.LudoDot"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

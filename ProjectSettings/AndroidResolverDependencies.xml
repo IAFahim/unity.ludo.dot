@@ -29,7 +29,7 @@
   </files>
   <settings>
     <setting name="androidAbis" value="arm64-v8a" />
-    <setting name="bundleId" value="com.coreloopstudio" />
+    <setting name="bundleId" value="com.zooshaus.ludodot" />
     <setting name="explodeAars" value="True" />
     <setting name="gradleBuildEnabled" value="True" />
     <setting name="gradlePropertiesTemplateEnabled" value="True" />
