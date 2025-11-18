@@ -184,16 +184,20 @@ public class GoogleManager : MonoBehaviour
             // Credential credential = GoogleAuthProvider.GetCredential(token, null);
             // user = await auth.SignInWithCredentialAsync(credential);
             // UpdateStatus("✅ Firebase Login Successful! User: " + user.DisplayName);
-
             GameManager.Instance.logged = true;
-            playFabManager.Login();
-            SceneManager.LoadScene("MenuScene");
+            Login();
         }
         catch (Exception e)
         {
             UpdateStatus("❌ Firebase Login Error: " + e.Message);
             Debug.LogError("❌ Firebase Google Login Error: " + e);
         }
+    }
+
+    public void Login(){
+        
+        playFabManager.Login();
+        SceneManager.LoadScene("MenuScene");
     }
 
     private void OnPlayFabLoginSuccess()

@@ -65,13 +65,11 @@ public class GameManager
     public int validPotsCount = 0;
 
     public string faultMessage = "";
-    public FacebookFriendsMenu facebookFriendsMenu;
     public GameObject matchPlayerObject;
     public GameObject backButtonMatchPlayers;
     public GameObject MatchPlayersCanvas;
     public GameObject reconnectingWindow;
     public GameControllerScript gameControllerScript;
-    public FacebookManager facebookManager;
     public GameObject whiteBall;
     public bool testValue;
     public bool hasCueInHand = false;

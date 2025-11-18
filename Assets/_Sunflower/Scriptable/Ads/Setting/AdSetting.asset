@@ -15,7 +15,7 @@ MonoBehaviour:
   adCheckingInterval: 8
   adLoadingInterval: 15
   useMax: 0
-  useAdmob: 1
+  useAdmob: 0
   useLevelPlay: 0
   enableTrackAdRevenue: 1
   enableGDPR: 1

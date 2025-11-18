@@ -83,7 +83,7 @@ public class InitMenuScript : MonoBehaviour
         GameManager.Instance.dialog = dialog;
         videoRewardText.GetComponent<Text>().text = "+" + StaticStrings.rewardForVideoAd;
         GameManager.Instance.tablesCanvas = tablesCanvas;
-        GameManager.Instance.facebookFriendsMenu = fbFriendsMenu.GetComponent<FacebookFriendsMenu>(); ;
+        // GameManager.Instance.facebookFriendsMenu = fbFriendsMenu.GetComponent<FacebookFriendsMenu>(); ;
         GameManager.Instance.matchPlayerObject = matchPlayer;
         GameManager.Instance.backButtonMatchPlayers = backButtonMatchPlayers;
         playerName.GetComponent<Text>().text = GameManager.Instance.nameMy;
@@ -141,11 +141,6 @@ public class InitMenuScript : MonoBehaviour
         //Application.Quit();
     }
 
-
-    public void LinkToFacebook()
-    {
-        GameManager.Instance.facebookManager.FBLinkAccount();
-    }
 
     public void ShowGameConfiguration(int index)
     {
@@ -322,14 +317,14 @@ public class InitMenuScript : MonoBehaviour
 
     public void startQuickGame()
     {
-        GameManager.Instance.facebookManager.startRandomGame();
+        // GameManager.Instance.facebookManager.startRandomGame();
     }
 
     public void startQuickGameTableNumer(int tableNumer, int fee)
     {
         GameManager.Instance.payoutCoins = fee;
         GameManager.Instance.tableNumber = tableNumer;
-        GameManager.Instance.facebookManager.startRandomGame();
+        // GameManager.Instance.facebookManager.startRandomGame();
     }
 
     public void showFacebookFriends()
@@ -355,7 +350,7 @@ public class InitMenuScript : MonoBehaviour
     }
     public void ShowRewardedAd()
     {
-        Gley.MobileAds.API.ShowRewardedVideo(CompleteMethod);
+        // Gley.MobileAds.API.ShowRewardedVideo(CompleteMethod);
        // Advertisements.Instance.ShowRewardedVideo(CompleteMethod);
     }
 }

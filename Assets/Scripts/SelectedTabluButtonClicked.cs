@@ -71,7 +71,7 @@ public class SelectedTabluButtonClicked : MonoBehaviour
             {
                 GameManager.Instance.tableNumber = tableNumber;
                 GameManager.Instance.payoutCoins = fee;
-                GameManager.Instance.facebookManager.startRandomGame();
+                // GameManager.Instance.facebookManager.startRandomGame();
             }
 
         }

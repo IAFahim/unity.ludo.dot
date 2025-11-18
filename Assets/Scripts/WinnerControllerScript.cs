@@ -18,7 +18,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using AssemblyCSharp;
 using PlayFab.ClientModels;
-using Facebook.Unity;
 using System;
 
 public class WinnerControllerScript : MonoBehaviour
@@ -204,32 +203,32 @@ public class WinnerControllerScript : MonoBehaviour
             myUri = new Uri("https://itunes.apple.com/us/app/apple-store/id" + StaticStrings.ITunesAppID);
 #endif
 
-            FB.ShareLink(
-                myUri,
-                StaticStrings.facebookShareLinkTitle,
-                callback: ShareCallback
-            );
+            // FB.ShareLink(
+            //     myUri,
+            //     StaticStrings.facebookShareLinkTitle,
+            //     callback: ShareCallback
+            // );
         }
     }
 
-    private void ShareCallback(IShareResult result)
-    {
-        if (result.Cancelled || !String.IsNullOrEmpty(result.Error))
-        {
-            Debug.Log("ShareLink Error: " + result.Error);
-        }
-        else if (!String.IsNullOrEmpty(result.PostId))
-        {
-            // Print post identifier of the shared content
-            Debug.Log(result.PostId);
-        }
-        else
-        {
-            // Share succeeded without postID
-            GameManager.Instance.playfabManager.addCoinsRequest(StaticStrings.rewardCoinsForShareViaFacebook);
-            Debug.Log("ShareLink success!");
-        }
-    }
+    // private void ShareCallback(IShareResult result)
+    // {
+    //     if (result.Cancelled || !String.IsNullOrEmpty(result.Error))
+    //     {
+    //         Debug.Log("ShareLink Error: " + result.Error);
+    //     }
+    //     else if (!String.IsNullOrEmpty(result.PostId))
+    //     {
+    //         // Print post identifier of the shared content
+    //         Debug.Log(result.PostId);
+    //     }
+    //     else
+    //     {
+    //         // Share succeeded without postID
+    //         GameManager.Instance.playfabManager.addCoinsRequest(StaticStrings.rewardCoinsForShareViaFacebook);
+    //         Debug.Log("ShareLink success!");
+    //     }
+    // }
 
 
     void OnDestroy()

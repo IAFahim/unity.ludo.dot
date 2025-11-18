@@ -108,12 +108,12 @@ public class GameConfigrationController : MonoBehaviour
            
             GameManager.Instance.playfabManager.addCoinsRequest(+GameManager.Instance.payoutCoins /2 );
 
-            if (GameManager.Instance.type != MyGameType.Private)
-            {
-                GameManager.Instance.facebookManager.startRandomGame();
-            }
-            else
-            {
+            // if (GameManager.Instance.type != MyGameType.Private)
+            // {
+            //     GameManager.Instance.facebookManager.startRandomGame();
+            // }
+            // else
+            // {
                 if (GameManager.Instance.JoinedByID)
                 {
                     Debug.Log("Joined by id!");
@@ -126,7 +126,7 @@ public class GameConfigrationController : MonoBehaviour
                     GameManager.Instance.matchPlayerObject.GetComponent<SetMyData>().MatchPlayer();
                 }
 
-            }
+            // }
         }
         else
         {

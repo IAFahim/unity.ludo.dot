@@ -18,7 +18,6 @@ using PlayFab;
 using PlayFab.ClientModels;
 using System;
 using UnityEngine.SceneManagement;
-using Facebook.Unity;
 using System.Collections.Generic;
 using ExitGames.Client.Photon.Chat;
 using ExitGames.Client.Photon;
@@ -37,9 +36,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
     public string authToken;
     public bool multiGame = true;
     public bool roomOwner = false;
-    private FacebookManager fbManager;
     public GameObject fbButton;
-    private FacebookFriendsMenu facebookFriendsMenu;
     public ChatClient chatClient;
     private bool alreadyGotFriends = false;
     public GameObject menuCanvas;
@@ -121,8 +118,8 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
         Debug.Log("Playfab start");
         PhotonNetwork.BackgroundTimeout = StaticStrings.photonDisconnectTimeoutLong; ;
         GameManager.Instance.playfabManager = this;
-        fbManager = GameObject.Find("FacebookManager").GetComponent<FacebookManager>();
-        facebookFriendsMenu = GameManager.Instance.facebookFriendsMenu;
+        // fbManager = GameObject.Find("FacebookManager").GetComponent<FacebookManager>();
+        // facebookFriendsMenu = GameManager.Instance.facebookFriendsMenu;
 
         avatarSprites = GameObject.Find("StaticGameVariablesContainer").GetComponent<StaticGameVariablesController>().avatars;
     }
@@ -497,7 +494,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
 
                 GameManager.Instance.myPlayerData.UpdateUserData(data);
 
-                fbManager.showLoadingCanvas();
+                // fbManager.showLoadingCanvas();
                 GetPhotonToken();
 
             },
@@ -517,39 +514,39 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
 
     }
 
-    public void LinkFacebookAccount()
-    {
-        LinkFacebookAccountRequest request = new LinkFacebookAccountRequest()
-        {
-            AccessToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString,
-            ForceLink = true
-        };
+    // public void LinkFacebookAccount()
+    // {
+    //     LinkFacebookAccountRequest request = new LinkFacebookAccountRequest()
+    //     {
+    //         AccessToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString,
+    //         ForceLink = true
+    //     };
 
-        PlayFabClientAPI.LinkFacebookAccount(request, (result) =>
-        {
-            Dictionary<string, string> data = new Dictionary<string, string>();
+    //     PlayFabClientAPI.LinkFacebookAccount(request, (result) =>
+    //     {
+    //         Dictionary<string, string> data = new Dictionary<string, string>();
 
-            data.Add("LoggedType", "Facebook");
-            data.Add("FacebookID", Facebook.Unity.AccessToken.CurrentAccessToken.UserId);
-            data.Add("PlayerAvatarUrl", GameManager.Instance.avatarMyUrl);
-            data.Add(MyPlayerData.PlayerName, GameManager.Instance.nameMy);
-            data.Add(MyPlayerData.AvatarIndexKey, "fb");
-            data.Add(MyPlayerData.CoinsKey, (GameManager.Instance.myPlayerData.GetCoins() + StaticStrings.CoinsForLinkToFacebook).ToString());
-            GameManager.Instance.myAvatarGameObject.GetComponent<Image>().sprite = GameManager.Instance.facebookAvatar;
-            GameManager.Instance.myNameGameObject.GetComponent<Text>().text = GameManager.Instance.nameMy;
-            GameManager.Instance.myPlayerData.UpdateUserData(data);
+    //         data.Add("LoggedType", "Facebook");
+    //         data.Add("FacebookID", Facebook.Unity.AccessToken.CurrentAccessToken.UserId);
+    //         data.Add("PlayerAvatarUrl", GameManager.Instance.avatarMyUrl);
+    //         data.Add(MyPlayerData.PlayerName, GameManager.Instance.nameMy);
+    //         data.Add(MyPlayerData.AvatarIndexKey, "fb");
+    //         data.Add(MyPlayerData.CoinsKey, (GameManager.Instance.myPlayerData.GetCoins() + StaticStrings.CoinsForLinkToFacebook).ToString());
+    //         GameManager.Instance.myAvatarGameObject.GetComponent<Image>().sprite = GameManager.Instance.facebookAvatar;
+    //         GameManager.Instance.myNameGameObject.GetComponent<Text>().text = GameManager.Instance.nameMy;
+    //         GameManager.Instance.myPlayerData.UpdateUserData(data);
 
-            GameManager.Instance.FacebookLinkButton.SetActive(false);
-        },
-        (error) =>
-        {
-            Debug.Log("Error linking facebook account: " + error.ErrorMessage + "\n" + error.ErrorDetails);
-            GameManager.Instance.connectionLost.showDialog();
-        });
+    //         GameManager.Instance.FacebookLinkButton.SetActive(false);
+    //     },
+    //     (error) =>
+    //     {
+    //         Debug.Log("Error linking facebook account: " + error.ErrorMessage + "\n" + error.ErrorDetails);
+    //         GameManager.Instance.connectionLost.showDialog();
+    //     });
 
 
 
-    }
+    // }
 
     public void LoginWithFacebook()
     {
@@ -557,7 +554,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
         {
             TitleId = PlayFabSettings.TitleId,
             CreateAccount = true,
-            AccessToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString
+            // AccessToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString
         };
 
         PlayFabClientAPI.LoginWithFacebook(request, (result) =>
@@ -600,7 +597,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
             Dictionary<string, string> data = new Dictionary<string, string>();
 
             data.Add("LoggedType", "Facebook");
-            data.Add("FacebookID", Facebook.Unity.AccessToken.CurrentAccessToken.UserId);
+            // data.Add("FacebookID", Facebook.Unity.AccessToken.CurrentAccessToken.UserId);
             if (result.NewlyCreated)
                 data.Add("PlayerName", GameManager.Instance.nameMy);
             else
@@ -770,7 +767,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
 
 
 
-            fbManager.showLoadingCanvas();
+            // fbManager.showLoadingCanvas();
 
 
             GetPhotonToken();
@@ -888,7 +885,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
             PlayerPrefs.SetString("LoggedType", "Guest");
             PlayerPrefs.Save();
 
-            fbManager.showLoadingCanvas();
+            // fbManager.showLoadingCanvas();
 
 
             GetPhotonToken();
@@ -909,12 +906,12 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
             Debug.Log("show firneds FFFF");
             if (PlayerPrefs.GetString("LoggedType").Equals("Facebook"))
             {
-                fbManager.getFacebookInvitableFriends();
+                // fbManager.getFacebookInvitableFriends();
             }
             else
             {
 
-                facebookFriendsMenu.showFriends(null, null, null);
+                // facebookFriendsMenu.showFriends(null, null, null);
             }
         }
         else
@@ -959,7 +956,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
                         Dictionary<string, UserDataRecord> data2 = result2.Data;
                         playfabFriendsName[ind2] = data2["PlayerName"].Value;
                         Debug.Log("Added " + data2["PlayerName"].Value);
-                        GameManager.Instance.facebookFriendsMenu.updateName(ind2, data2["PlayerName"].Value, friend.TitleDisplayName);
+                        // GameManager.Instance.facebookFriendsMenu.updateName(ind2, data2["PlayerName"].Value, friend.TitleDisplayName);
 
                     }, (error) =>
                     {
@@ -978,15 +975,15 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
 
                 chatClient.AddFriends(friendsToStatus.ToArray());
 
-                GameManager.Instance.facebookFriendsMenu.addPlayFabFriends(playfabFriends, playfabFriendsName, playfabFriendsFacebookId);
+                // GameManager.Instance.facebookFriendsMenu.addPlayFabFriends(playfabFriends, playfabFriendsName, playfabFriendsFacebookId);
 
                 if (PlayerPrefs.GetString("LoggedType").Equals("Facebook"))
                 {
-                    fbManager.getFacebookInvitableFriends();
+                    // fbManager.getFacebookInvitableFriends();
                 }
                 else
                 {
-                    GameManager.Instance.facebookFriendsMenu.showFriends(null, null, null);
+                    // GameManager.Instance.facebookFriendsMenu.showFriends(null, null, null);
                 }
             }, OnPlayFabError);
         }
@@ -1166,7 +1163,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
     public void switchUser()
     {
         GameManager.Instance.playfabManager.destroy();
-        GameManager.Instance.facebookManager.destroy();
+        // GameManager.Instance.facebookManager.destroy();
         GameManager.Instance.connectionLost.destroy();
         //GameManager.Instance.adsScript.destroy();
         GameManager.Instance.avatarMy = null;
@@ -1216,8 +1213,8 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
             GameManager.Instance.friendsStatuses.Add(new string[] { user, "" + status });
         }
 
-        if (GameManager.Instance.facebookFriendsMenu != null)
-            GameManager.Instance.facebookFriendsMenu.updateFriendStatus(status, user);
+        // if (GameManager.Instance.facebookFriendsMenu != null)
+            // GameManager.Instance.facebookFriendsMenu.updateFriendStatus(status, user);
     }
 
     public override void OnConnectedToMaster()
@@ -1548,7 +1545,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
         }
         else
         {
-            GameManager.Instance.facebookManager.startRandomGame();
+            // GameManager.Instance.facebookManager.startRandomGame();
         }
     }
 

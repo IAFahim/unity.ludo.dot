@@ -100,7 +100,7 @@ public class PhotonChatListener : PunBehaviour
                 PhotonNetwork.JoinRoom(roomName);
                 if (GameManager.Instance.type != MyGameType.Private)
                 {
-                    GameManager.Instance.facebookManager.startRandomGame();
+                    // GameManager.Instance.facebookManager.startRandomGame();
                 }
                 else
                 {

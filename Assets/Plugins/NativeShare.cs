@@ -78,20 +78,20 @@ public class NativeShare : MonoBehaviour
         AndroidJavaObject jChooser = intentClass.CallStatic<AndroidJavaObject>("createChooser", intentObject, subject);
         currentActivity.Call("startActivity", jChooser);
 #elif UNITY_IOS
-		CallSocialShareAdvanced(shareText, subject, url, imagePath);
+		// CallSocialShareAdvanced(shareText, subject, url, imagePath);
 #else
         Debug.Log("No sharing set up for this platform.");
 #endif
     }
 
 #if UNITY_IOS
-	public struct ConfigStruct
-	{
-		public string title;
-		public string message;
-	}
+	// public struct ConfigStruct
+	// {
+	// 	public string title;
+	// 	public string message;
+	// }
 
-	[DllImport ("__Internal")] private static extern void showAlertMessage(ref ConfigStruct conf);
+	// [DllImport ("__Internal")] private static extern void showAlertMessage(ref ConfigStruct conf);
 
 	public struct SocialSharingStruct
 	{
@@ -101,15 +101,15 @@ public class NativeShare : MonoBehaviour
 		public string subject;
 	}
 
-	[DllImport ("__Internal")] private static extern void showSocialSharing(ref SocialSharingStruct conf);
+	// [DllImport ("__Internal")] private static extern void showSocialSharing(ref SocialSharingStruct conf);
 
-	public static void CallSocialShare(string title, string message)
-	{
-		ConfigStruct conf = new ConfigStruct();
-		conf.title  = title;
-		conf.message = message;
-		showAlertMessage(ref conf);
-	}
+	// public static void CallSocialShare(string title, string message)
+	// {
+	// 	ConfigStruct conf = new ConfigStruct();
+	// 	conf.title  = title;
+	// 	conf.message = message;
+	// 	showAlertMessage(ref conf);
+	// }
 
 
 	public static void CallSocialShareAdvanced(string defaultTxt, string subject, string url, string img)
@@ -122,7 +122,7 @@ public class NativeShare : MonoBehaviour
 		}
 		conf.subject = subject;
 
-		showSocialSharing(ref conf);
+		// showSocialSharing(ref conf);
 	}
 #endif
 }
