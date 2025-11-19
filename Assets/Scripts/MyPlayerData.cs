@@ -135,16 +135,29 @@ public class MyPlayerData
 
     public void UpdateUserData(Dictionary<string, string> data)
     {
+        // Fix: Ensure local data dictionary exists
+        if (this.data == null) 
+            this.data = new Dictionary<string, UserDataRecord>();
+
         if (this.data != null)
+        {
             foreach (var item in data)
             {
                 Debug.Log("SAVE: " + item.Key);
                 if (this.data.ContainsKey(item.Key))
                 {
-                    Debug.Log("AA");
+                    // Update existing key
                     this.data[item.Key].Value = item.Value;
                 }
+                else
+                {
+                    // FIX: Add the key locally if it doesn't exist yet!
+                    UserDataRecord newRecord = new UserDataRecord();
+                    newRecord.Value = item.Value;
+                    this.data.Add(item.Key, newRecord);
+                }
             }
+        }
 
         UpdateUserDataRequest userDataRequest = new UpdateUserDataRequest()
         {

@@ -24,13 +24,16 @@ public class GoogleManager : MonoBehaviour
     // private FirebaseAuth auth;
     // private FirebaseUser user;
 
-    public GameObject[] objectsToDisable; 
+    public GameObject[] objectsToDisable;
 
-    private async void Awake()
+    private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
         FirebaseCallbacks.SubscribeGoogleSignInAndroidSuccess(OnAuthenticationFinished);
+    }
 
+    private void Start()
+    {
         // configuration = new GoogleSignInConfiguration
         // {
         //     WebClientId = webClientId,
@@ -54,7 +57,7 @@ public class GoogleManager : MonoBehaviour
 //         UpdateStatus("🧩 Running in Unity Editor — Google Sign-In is simulated.");
 // #else
         // ✅ Auto-login if previous Google session exists
-        if (PlayerPrefs.GetString("LoggedType") == "Google")
+        if (PlayerPrefs.GetString("LoggedType") == "Google" || FirebaseAuth.DefaultInstance.CurrentUser != null)
         {
             UpdateStatus("🔹 Attempting Google Auto-Login...");
             foreach (var o in objectsToDisable)

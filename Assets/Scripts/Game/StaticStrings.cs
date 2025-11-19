@@ -49,7 +49,7 @@ namespace AssemblyCSharp
 
         // Initial coins count for new players
         // When logged as Guest
-        public static int initCoinsCountGuest = 500;
+        public static int initCoinsCountGuest = 3000;
         //When logged via Facebook
         public static int initCoinsCountFacebook = 20000;
         //When logged as Guest and then link to Facebook

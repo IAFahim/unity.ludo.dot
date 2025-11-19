@@ -1,103 +1,62 @@
-/*
-http://www.cgsoso.com/forum-211-1.html
-
-CG搜搜 Unity3d 每日Unity3d插件免费更新 更有VIP资源！
-
-CGSOSO 主打游戏开发，影视设计等CG资源素材。
-
-插件如若商用，请务必官网购买！
-
-daily assets update for try.
-
-U should buy the asset from home store if u use it in your project!
-*/
-
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using AssemblyCSharp;
 using PlayFab.ClientModels;
-using Facebook.Unity;
+// REMOVED: using Facebook.Unity;
 using System;
 
 public class WinnerControllerScript : MonoBehaviour
 {
-
+    // ... (Keep existing variables) ...
     public GameObject myObject;
     public GameObject opponentObject;
     public GameObject shareButton;
-
     public bool isGameScene = false;
-
     public Image myImage;
     public Image oppoImage;
-
     public Text myName;
     public Text oppoText;
-
     public GameObject myMessageBubble;
     public GameObject oppoMessageBubble;
-
     public GameObject rematchButton;
-
     public bool rematchRequest = false;
     public bool sentRematch = false;
-
     public GameObject ChatMessagesList;
     public GameObject ChatMessageButtonPrefab;
-
     public GameObject ChatMessagesObject;
-
     public GameObject prizeText;
     private AudioSource[] audioSources;
     public GameObject reardShareText;
-
     public bool messageDialogVisible = false;
-    // Use this for initialization
+
     void Start()
     {
-
-
-
         audioSources = GetComponents<AudioSource>();
-
         if (GameManager.Instance.playerDisconnected)
         {
             GameManager.Instance.playerDisconnected = false;
-            if (!isGameScene)
-            {
-                rematchButton.SetActive(false);
-            }
+            if (!isGameScene) rematchButton.SetActive(false);
         }
-
-
 
         if (!isGameScene)
         {
-
-
             PhotonNetwork.BackgroundTimeout = StaticStrings.photonDisconnectTimeoutLong; ;
+            if (GameManager.Instance.payoutCoins > GameManager.Instance.myPlayerData.GetCoins()) rematchButton.SetActive(false);
+            if (reardShareText != null) reardShareText.GetComponent<Text>().text = "+" + StaticStrings.rewardCoinsForShareViaFacebook;
 
-            if (GameManager.Instance.payoutCoins > GameManager.Instance.myPlayerData.GetCoins())
-            {
-                rematchButton.SetActive(false);
-            }
-
-            if (reardShareText != null)
-                reardShareText.GetComponent<Text>().text = "+" + StaticStrings.rewardCoinsForShareViaFacebook;
-
-            // if (StaticStrings.showAdOnGameOverScene)
-            //     AdsManager.Instance.adsScript.ShowAd();
-
+            // If we removed FB SDK, we might want to hide the specific "FB Share" button or repurpose it
+            // For now, we keep logic but rely on PlayerPrefs type check which should now be Guest
             if (!PlayerPrefs.GetString("LoggedType").Equals("Facebook"))
             {
-                shareButton.SetActive(false);
+                // shareButton.SetActive(false); // Optional: Hide if you don't want sharing at all
             }
 
             rematchRequest = false;
             sentRematch = false;
-
+            
+            // ... (Keep existing animation logic) ...
             if (GameManager.Instance.iWon)
             {
                 myObject.GetComponent<Animator>().Play("WinnerOpponentAnimation");
@@ -117,51 +76,31 @@ public class WinnerControllerScript : MonoBehaviour
                 audioSources[1].Play();
             }
 
-            if (GameManager.Instance.avatarMy != null)
-                myImage.sprite = GameManager.Instance.avatarMy;
-            if (GameManager.Instance.avatarOpponent != null)
-                oppoImage.sprite = GameManager.Instance.avatarOpponent;
+            if (GameManager.Instance.avatarMy != null) myImage.sprite = GameManager.Instance.avatarMy;
+            if (GameManager.Instance.avatarOpponent != null) oppoImage.sprite = GameManager.Instance.avatarOpponent;
 
             myName.text = GameManager.Instance.nameMy;
             oppoText.text = GameManager.Instance.nameOpponent;
 
             int prizeCoins = GameManager.Instance.payoutCoins * 2;
-
+            // ... (Keep prize text formatting logic) ...
             if (prizeCoins >= 1000)
             {
                 if (prizeCoins >= 1000000)
                 {
-                    if (prizeCoins % 1000000.0f == 0)
-                    {
-                        prizeText.GetComponent<Text>().text = (prizeCoins / 1000000.0f).ToString("0") + "M";
-
-                    }
-                    else
-                    {
-                        prizeText.GetComponent<Text>().text = (prizeCoins / 1000000.0f).ToString("0.0") + "M";
-
-                    }
-
+                    if (prizeCoins % 1000000.0f == 0) prizeText.GetComponent<Text>().text = (prizeCoins / 1000000.0f).ToString("0") + "M";
+                    else prizeText.GetComponent<Text>().text = (prizeCoins / 1000000.0f).ToString("0.0") + "M";
                 }
                 else
                 {
-                    if (prizeCoins % 1000.0f == 0)
-                    {
-                        prizeText.GetComponent<Text>().text = (prizeCoins / 1000.0f).ToString("0") + "k";
-                    }
-                    else
-                    {
-                        prizeText.GetComponent<Text>().text = (prizeCoins / 1000.0f).ToString("0.0") + "k";
-                    }
-
+                    if (prizeCoins % 1000.0f == 0) prizeText.GetComponent<Text>().text = (prizeCoins / 1000.0f).ToString("0") + "k";
+                    else prizeText.GetComponent<Text>().text = (prizeCoins / 1000.0f).ToString("0.0") + "k";
                 }
             }
-            else
-            {
-                prizeText.GetComponent<Text>().text = prizeCoins + "";
-            }
+            else prizeText.GetComponent<Text>().text = prizeCoins + "";
         }
 
+        // ... (Keep Chat Message Button Instantiation) ...
         for (int i = 0; i < StaticStrings.chatMessages.Length; i++)
         {
             GameObject button = Instantiate(ChatMessageButtonPrefab);
@@ -172,8 +111,8 @@ public class WinnerControllerScript : MonoBehaviour
             button.GetComponent<Button>().onClick.RemoveAllListeners();
             button.GetComponent<Button>().onClick.AddListener(() => SendMessageEvent(index));
         }
-
-        for (int i = 0; i < StaticStrings.chatMessagesExtended.Length; i++)
+        // ... (Rest of chat instantiation) ...
+         for (int i = 0; i < StaticStrings.chatMessagesExtended.Length; i++)
         {
             if (GameManager.Instance.myPlayerData.GetChats().Contains("'" + i + "'"))
             {
@@ -188,49 +127,20 @@ public class WinnerControllerScript : MonoBehaviour
                     button.GetComponent<Button>().onClick.AddListener(() => SendMessageEvent(index));
                 }
             }
-
         }
-
     }
-
 
     public void share()
     {
-        if (PlayerPrefs.GetString("LoggedType").Equals("Facebook"))
-        {
-
-            Uri myUri = new Uri("https://play.google.com/store/apps/details?id=" + StaticStrings.AndroidPackageName);
-#if UNITY_IPHONE
-            myUri = new Uri("https://itunes.apple.com/us/app/apple-store/id" + StaticStrings.ITunesAppID);
-#endif
-
-            FB.ShareLink(
-                myUri,
-                StaticStrings.facebookShareLinkTitle,
-                callback: ShareCallback
-            );
-        }
+        // Removed FB Share logic. 
+        // Simulate Native Share or just give coins immediately.
+        Debug.Log("Share clicked - Giving coins immediately (FB Removed)");
+        GameManager.Instance.playfabManager.addCoinsRequest(StaticStrings.rewardCoinsForShareViaFacebook);
     }
 
-    private void ShareCallback(IShareResult result)
-    {
-        if (result.Cancelled || !String.IsNullOrEmpty(result.Error))
-        {
-            Debug.Log("ShareLink Error: " + result.Error);
-        }
-        else if (!String.IsNullOrEmpty(result.PostId))
-        {
-            // Print post identifier of the shared content
-            Debug.Log(result.PostId);
-        }
-        else
-        {
-            // Share succeeded without postID
-            GameManager.Instance.playfabManager.addCoinsRequest(StaticStrings.rewardCoinsForShareViaFacebook);
-            Debug.Log("ShareLink success!");
-        }
-    }
+    // Removed ShareCallback method
 
+    // ... (Keep OnDestroy, SendMessageEvent, loadMenuScene, sendRematchRequest, etc.) ...
 
     void OnDestroy()
     {
@@ -255,13 +165,10 @@ public class WinnerControllerScript : MonoBehaviour
                 Invoke("hideMyMessageBubble", 6.0f);
             }
         }
-
     }
 
     public void loadMenuScene()
     {
-        // if (GameManager.Instance.offlineMode && StaticStrings.showAdWhenLeaveGame)
-        //     AdsManager.Instance.adsScript.ShowAd();
         SceneManager.LoadScene("MenuScene");
         Debug.Log("Timeout 6");
         PhotonNetwork.BackgroundTimeout = StaticStrings.photonDisconnectTimeoutLong; ;
@@ -275,7 +182,6 @@ public class WinnerControllerScript : MonoBehaviour
         GameManager.Instance.playfabManager.roomOwner = false;
         GameManager.Instance.roomOwner = false;
         GameManager.Instance.resetAllData();
-
     }
 
     public void sendRematchRequest()
@@ -311,13 +217,11 @@ public class WinnerControllerScript : MonoBehaviour
     {
         ChatMessagesObject.GetComponent<Animator>().Play("showMessagesDialog");
         messageDialogVisible = true;
-
     }
 
     void Awake()
     {
         PhotonNetwork.OnEventCall += this.OnEvent;
-
     }
 
     public void removeOnEventCall()
@@ -325,10 +229,10 @@ public class WinnerControllerScript : MonoBehaviour
         PhotonNetwork.OnEventCall -= this.OnEvent;
     }
 
-    // Multiplayer data received
     private void OnEvent(byte eventcode, object content, int senderid)
     {
-        Debug.Log("Received message");
+         // ... (Keep existing event logic) ...
+         Debug.Log("Received message");
         if (eventcode == 195)
         {
             if (sentRematch)
@@ -370,7 +274,6 @@ public class WinnerControllerScript : MonoBehaviour
                 CancelInvoke("hideOppoMessageBubble");
                 Invoke("hideOppoMessageBubble", 6.0f);
             }
-
         }
     }
 
