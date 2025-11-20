@@ -57,7 +57,7 @@ public class GoogleManager : MonoBehaviour
 //         UpdateStatus("🧩 Running in Unity Editor — Google Sign-In is simulated.");
 // #else
         // ✅ Auto-login if previous Google session exists
-        if (PlayerPrefs.GetString("LoggedType") == "Google" || FirebaseAuth.DefaultInstance.CurrentUser != null)
+        if (PlayerPrefs.GetString("LoggedType") == "Google")
         {
             UpdateStatus("🔹 Attempting Google Auto-Login...");
             foreach (var o in objectsToDisable)
@@ -131,7 +131,9 @@ public class GoogleManager : MonoBehaviour
             GameManager.Instance.logged = false;
 
             PlayerPrefs.SetString("LoggedType", "Google");
+            PlayerPrefs.SetString("unique_identifier", userID);
             PlayerPrefs.Save();
+            
 
             if (!string.IsNullOrEmpty(photoUrlAbsoluteUri))
                 StartCoroutine(DownloadProfilePicture(photoUrlAbsoluteUri));
