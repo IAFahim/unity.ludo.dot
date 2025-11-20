@@ -57,12 +57,12 @@ public class FacebookManager : MonoBehaviour
         GameManager.Instance.facebookManager = this;
         DontDestroyOnLoad(transform.gameObject);
         playFabManager = GameObject.Find("PlayFabManager").GetComponent<PlayFabManager>();
-        if (!GameManager.Instance.logged)
-        {
-            // Immediately init session without waiting for FB.Init
-            initSession();
-            GameManager.Instance.logged = true;
-        }
+        // if (!GameManager.Instance.logged && )
+        // {
+        //     // Immediately init session without waiting for FB.Init
+        //     initSession();
+        //     // GameManager.Instance.logged = true;
+        // }
     }
 
     // Simulates the callback SetInit used to do
@@ -197,10 +197,5 @@ public class FacebookManager : MonoBehaviour
     {
         if (this.gameObject != null)
             DestroyImmediate(this.gameObject);
-    }
-
-    public void showLoadingCanvas()
-    {
-        splashCanvas.SetActive(true);
     }
 }

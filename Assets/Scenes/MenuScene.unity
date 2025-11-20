@@ -36758,7 +36758,7 @@ Material:
     m_Floats:
     - _Alpha: 0
     - _ColorMask: 15
-    - _Distortion: 0.9066975
+    - _Distortion: 0.4898269
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -37100,7 +37100,7 @@ Material:
     m_Floats:
     - _Alpha: 0
     - _ColorMask: 15
-    - _Distortion: 0.9066975
+    - _Distortion: 0.4898269
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -39113,7 +39113,7 @@ Material:
     m_Floats:
     - _Alpha: 0
     - _ColorMask: 15
-    - _Distortion: 0.9066975
+    - _Distortion: 0.4898269
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -39865,7 +39865,7 @@ Material:
     m_Floats:
     - _Alpha: 0
     - _ColorMask: 15
-    - _Distortion: 0.9066975
+    - _Distortion: 0.4898269
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -41847,7 +41847,7 @@ Material:
     m_Floats:
     - _Alpha: 0
     - _ColorMask: 15
-    - _Distortion: 0.9066975
+    - _Distortion: 0.4898269
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -43812,7 +43812,7 @@ Material:
     m_Floats:
     - _Alpha: 0
     - _ColorMask: 15
-    - _Distortion: 0.9066975
+    - _Distortion: 0.4898269
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -50846,7 +50846,7 @@ Material:
     m_Floats:
     - _Alpha: 0
     - _ColorMask: 15
-    - _Distortion: 0.9066975
+    - _Distortion: 0.4898269
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0

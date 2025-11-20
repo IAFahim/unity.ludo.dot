@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using UnityEngine.Advertisements;
 #endif
 using AssemblyCSharp;
+using ElProfesorKudo.Firebase.UI;
 
 public class InitMenuScript : MonoBehaviour
 {
@@ -240,7 +241,6 @@ public class InitMenuScript : MonoBehaviour
         //GameManager.Instance.playfabManager.destroy();
         //GameManager.Instance.facebookManager.destroy();
         //GameManager.Instance.connectionLost.destroy();
-
         GameManager.Instance.avatarMy = null;
         PhotonNetwork.Disconnect();
 
@@ -252,6 +252,8 @@ public class InitMenuScript : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
+        Firebase.Auth.FirebaseAuth.DefaultInstance?.SignOut();
+        PlayerPrefs.SetInt("Forget", 1);
         SceneManager.LoadScene("LoginSplash");
     }
     public void showChangeDialog()

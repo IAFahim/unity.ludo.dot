@@ -12,6 +12,7 @@ using UnityEngine.UI;
 using System.Text.RegularExpressions;
 using AssemblyCSharp;
 using System.Globalization;
+using Firebase.Auth;
 
 public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
 {
@@ -311,8 +312,6 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
                 data.Add("LoggedType", "EmailAccount");
                 data.Add("PlayerName", GameManager.Instance.nameMy);
                 GameManager.Instance.myPlayerData.UpdateUserData(data);
-
-                fbManager.showLoadingCanvas();
                 GetPhotonToken();
             },
                 (error) =>
@@ -397,7 +396,6 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
                 }
             }, null, null);
 
-            fbManager.showLoadingCanvas();
             GetPhotonToken();
         },
              (error) => { loginInvalidEmailorPassword.SetActive(true); });
@@ -449,8 +447,10 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
                     name += UnityEngine.Random.Range(0, 9);
                 }
 
+                if (FirebaseAuth.DefaultInstance?.CurrentUser != null) name = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName;
                 data.Add("PlayerName", name);
                 GameManager.Instance.nameMy = name;
+                
             }
             else
             {
@@ -505,8 +505,6 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
             // PlayerPrefs.SetString("LoggedType", "Guest");
             // PlayerPrefs.Save();
 
-            fbManager.showLoadingCanvas();
-
 
             GetPhotonToken();
 
@@ -515,7 +513,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
             {
                 Debug.Log("Error logging in player with custom ID:");
                 Debug.Log(error.ErrorMessage);
-                GameManager.Instance.connectionLost.showDialog();
+                // GameManager.Instance.connectionLost.showDialog();
             });
     }
 
@@ -669,7 +667,7 @@ public class PlayFabManager : Photon.PunBehaviour, IChatClientListener
     {
         GameManager.Instance.playfabManager.destroy();
         GameManager.Instance.facebookManager.destroy();
-        GameManager.Instance.connectionLost.destroy();
+        // GameManager.Instance.connectionLost.destroy();
         GameManager.Instance.avatarMy = null;
         GameManager.Instance.logged = false;
         GameManager.Instance.resetAllData();

@@ -76,6 +76,16 @@ namespace ElProfesorKudo.Firebase.UI
 #endif
         }
 
+        private void OnEnable()
+        {
+            var isForget = PlayerPrefs.GetInt("Forget", 0);
+            if (isForget != 0)
+            {
+                PlayerPrefs.SetInt("Forget", 0);
+                OnClickSignOutGoogle();
+            }
+        }
+
         public void OnClickLogout()
         {
             FirebaseClassicAuthService.Instance.Logout();

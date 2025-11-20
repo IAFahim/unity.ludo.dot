@@ -143,7 +143,6 @@ public class GameManager
     public ControlAvatars controlAvatars;
 
 
-    public ConnectionLostController connectionLost;
     public bool opponentActive = true;
     public IMiniGame miniGame;
 
