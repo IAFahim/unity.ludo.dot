@@ -1,10 +1,10 @@
 using System;
-using ElProfesorKudo.Firebase.Core;
 using Firebase;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using MonoBehaviour = Photon.MonoBehaviour;
+using Firebase.Auth;
 
 namespace ElProfesorKudo.Firebase.UI
 {
@@ -23,8 +23,7 @@ namespace ElProfesorKudo.Firebase.UI
 
         private void OnEnable()
         {
-            var firebaseUser = FirebaseCoreService.Instance.CurrentUser;
-            if (firebaseUser != null)
+            if (FirebaseAuth.DefaultInstance?.CurrentUser != null)
             {
                 image.color = logOutColor;
                 text.text = logoutText;

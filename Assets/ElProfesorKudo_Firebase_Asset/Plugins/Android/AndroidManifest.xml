@@ -36,7 +36,7 @@
                 <data android:scheme="unitydl" android:host="" />
             </intent-filter>
         </activity>
-        <meta-data android:name="com.google.android.gms.auth.api.signin.clientid" android:value="152386388199-3lctehml9rubg3bqr8q4oh0fbv922iqk.apps.googleusercontent.com" />
+        <meta-data android:name="com.google.android.gms.auth.api.signin.clientid" android:value="190615501378-na9qi1vboee8636t6p5ns3tgf2ir685o.apps.googleusercontent.com" />
         <meta-data android:name="com.elprofesorkudo.googlesigninplugin.receiver" android:value="GameObjectReceiver" />
         <meta-data android:name="com.elprofesorkudo.notificationplugin.sound_notification_name" android:value="alert" />
         <meta-data android:name="com.elprofesorkudo.applesigninplugin.receiver" android:value="GameObjectReceiver" />
