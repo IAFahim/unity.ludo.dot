@@ -7,47 +7,29 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:190615501378:android:4e3585dbcd98da35bb0bdb",
+        "mobilesdk_app_id": "1:190615501378:ios:565f7527549344ddbb0bdb",
         "android_client_info": {
           "package_name": "com.zooshaus.ludodot"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "190615501378-f41dgnmnk89hq4tp5i47u6cer65k61vd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.zooshaus.ludodot",
-            "certificate_hash": "0190c2a3bc85ec7c947a5e9a28103e4d27840be3"
-          }
-        },
-        {
-          "client_id": "190615501378-na9qi1vboee8636t6p5ns3tgf2ir685o.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCFil-Wl8-0vBGLrJIivej_PQrnRQF3vso"
+          "current_key": "AIzaSyDGDu0Tgv-oae4OVamyAS06BE_fDybL8bg"
         }
       ],
       "services": {
+        "analytics_service": {
+          "status": 0
+        },
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "190615501378-na9qi1vboee8636t6p5ns3tgf2ir685o.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "190615501378-08fanbhfmci092ppuk4t4gsameuegei5.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.zooshaus.LudoDot"
-              }
-            }
-          ]
+          "status": 1
         }
-      }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190615501378-i70a3po5vbbel7vos58h50im5vn065p2.apps.googleusercontent.com"
+        }
+      ]
     }
   ],
   "configuration_version": "1"

@@ -208,19 +208,38 @@ namespace ElProfesorKudo.Firebase.Editor.Build
             plist.ReadFromFile(plistPath);
             PlistElementDict rootDict = plist.root;
 
-            // Add the GIDClientID key if it doesn't already exist
-            const string GIDClientIDKey = "GIDClientID";
-            // Use the value passed as a parameter from the ScriptableObject
-            string GIDClientIDValue = gidClientID;
+            // 1. Set/overwrite the GIDClientID
+            rootDict.SetString("GIDClientID", gidClientID);
+            Debug.Log("Set GIDClientID in Info.plist: " + gidClientID);
 
-            if (!rootDict.values.ContainsKey(GIDClientIDKey))
+            // 2. Add the URL Scheme
+            string reversedGidClientID = string.Join(".", gidClientID.Split('.').Reverse());
+
+            // Get or create URL types array
+            PlistElementArray urlTypes = rootDict.values.ContainsKey("CFBundleURLTypes")
+                ? rootDict["CFBundleURLTypes"].AsArray()
+                : rootDict.CreateArray("CFBundleURLTypes");
+
+            // Check if our scheme is already present
+            bool schemeExists = urlTypes.values
+                .OfType<PlistElementDict>()
+                .Any(d => d.values.ContainsKey("CFBundleURLSchemes") &&
+                          d["CFBundleURLSchemes"].AsArray().values
+                              .OfType<PlistElementString>()
+                              .Any(s => s.value == reversedGidClientID));
+
+            if (!schemeExists)
             {
-                rootDict.SetString(GIDClientIDKey, GIDClientIDValue);
-                Debug.Log("GIDClientID added to Info.plist: " + GIDClientIDValue);
+                // If not present, add it.
+                PlistElementDict newUrlType = urlTypes.AddDict();
+                newUrlType.SetString("CFBundleURLName", "com.google.signin");
+                PlistElementArray schemesArray = newUrlType.CreateArray("CFBundleURLSchemes");
+                schemesArray.AddString(reversedGidClientID);
+                Debug.Log("Added URL scheme to Info.plist: " + reversedGidClientID);
             }
             else
             {
-                Debug.Log("GIDClientID already present in Info.plist. No modification.");
+                Debug.Log("URL scheme already present in Info.plist: " + reversedGidClientID);
             }
 
             plist.WriteToFile(plistPath);

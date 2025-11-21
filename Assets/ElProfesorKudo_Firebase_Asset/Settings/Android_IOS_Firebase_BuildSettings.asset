@@ -17,7 +17,7 @@ MonoBehaviour:
   AllowAutoTrimClientIDs: 1
   WebClientID: 190615501378-na9qi1vboee8636t6p5ns3tgf2ir685o.apps.googleusercontent.com
   AllowUpdateSwiftWebClientID: 1
-  GIDClientID: 152386388199-1skta60ukl4h4gl8q120m7olde9nkqc5.apps.googleusercontent.com
+  GIDClientID: 190615501378-i70a3po5vbbel7vos58h50im5vn065p2.apps.googleusercontent.com
   AllowUpdateInfoPlist: 1
   AllowInjectFirebaseInit: 1
   AllowOverridePodfile: 1
@@ -30,7 +30,7 @@ MonoBehaviour:
   AllowInjectManifestDataAndroid: 1
   AndroidWebClientID: 190615501378-na9qi1vboee8636t6p5ns3tgf2ir685o.apps.googleusercontent.com
   AllowInjectManifestDataIos: 1
-  AndroidAppleRedirectUri: 
+  AndroidAppleRedirectUri: https://ludodot-5d924.firebaseapp.com/__/auth/handler
   AndroidRedirectHost: 
   AndroidRedirectPath: /redirect.html
   AndroidCustomScheme: unitydl
