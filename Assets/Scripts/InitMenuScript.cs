@@ -26,6 +26,7 @@ using UnityEngine.Advertisements;
 #endif
 using AssemblyCSharp;
 using ElProfesorKudo.Firebase.UI;
+using Firebase.Auth;
 
 public class InitMenuScript : MonoBehaviour
 {
@@ -252,10 +253,20 @@ public class InitMenuScript : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        GoogleManager.Instance.SignOutGoogle();
+        SignOutGoogle();
         PlayerPrefs.SetInt("Forget", 1);
         SceneManager.LoadScene("LoginSplash");
     }
+    
+    // 🔧 Public method that can be called from any scene
+    public void SignOutGoogle()
+    {
+        PlayerPrefs.SetInt("HasLoggedOut", 1);
+        PlayerPrefs.Save();
+        
+        FirebaseAuth.DefaultInstance.SignOut();
+    }
+    
     public void showChangeDialog()
     {
         changeDialog.SetActive(true);

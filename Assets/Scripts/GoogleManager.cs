@@ -10,44 +10,59 @@ using UnityEngine.SceneManagement;
 
 public class GoogleManager : MonoBehaviour
 {
-    // 🔧 Singleton Pattern
-    public static GoogleManager Instance { get; private set; }
-
     public GameObject[] objectsToDisable;
     public PlayFabManager playFabManager;
 
     private bool isFirebaseReady = false;
     private bool isProcessingLogin = false;
+    private bool shouldCheckAutoLogin = false; // Flag for main thread check
 
     private void Awake()
     {
-        // 🔧 Singleton implementation
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-
-        Instance = this;
         DontDestroyOnLoad(this.gameObject);
-        
+
         // Subscribe to Firebase callbacks
         FirebaseCallbacks.SubscribeGoogleSignInAndroidSuccess(OnAuthenticationFinished);
         FirebaseCallbacks.SubscribeCurrentUserLoaded(OnCurrentUserLoaded);
         FirebaseCallbacks.SubscribeFirebaseReady(OnFirebaseReady);
     }
 
-    // ✅ This is called when Firebase is ready
+    private void Update()
+    {
+        // Check auto-login on main thread
+        if (shouldCheckAutoLogin && PlayerPrefs.GetInt("HasLoggedOut", 0) == 0)
+        {
+            shouldCheckAutoLogin = false;
+            CheckAutoLogin();
+        }
+    }
+
+    // ✅ This is called when Firebase is ready (may be on background thread)
     private void OnFirebaseReady()
     {
         Debug.Log("✅ Firebase is ready!");
         isFirebaseReady = true;
-        CheckAutoLogin();
+
+        // 🔧 FIX: Set flag instead of calling directly
+        shouldCheckAutoLogin = true;
     }
 
     // ✅ Check for auto-login only after Firebase is ready
     private void CheckAutoLogin()
     {
+        // 🔧 FIX: Null check for playFabManager
+        if (playFabManager == null)
+        {
+            Debug.LogError("❌ PlayFabManager is not assigned in GoogleManager!");
+            return;
+        }
+
+        if (PlayerPrefs.GetString("LoggedType") != "Google")
+        {
+            playFabManager.Login();
+            return;
+        }
+
         if (!isFirebaseReady)
         {
             Debug.LogWarning("⚠️ Firebase not ready yet, cannot check auto-login");
@@ -70,17 +85,31 @@ public class GoogleManager : MonoBehaviour
             return;
         }
 
+        // 🔧 FIX: Null check for FirebaseAuth
+        if (FirebaseAuth.DefaultInstance == null)
+        {
+            Debug.LogError("❌ FirebaseAuth.DefaultInstance is null!");
+            return;
+        }
+
         // Check if user is already logged in with Firebase
         if (FirebaseAuth.DefaultInstance.CurrentUser != null)
         {
             Debug.Log("✅ User already logged in with Firebase");
             isProcessingLogin = true;
-            
-            foreach (var o in objectsToDisable)
+
+            // 🔧 FIX: Null check for objects to disable
+            if (objectsToDisable != null)
             {
-                o.SetActive(false);
+                foreach (var o in objectsToDisable)
+                {
+                    if (o != null)
+                    {
+                        o.SetActive(false);
+                    }
+                }
             }
-            
+
             PopulateUserData();
             playFabManager.Login();
             SceneManager.LoadScene("MenuScene");
@@ -92,14 +121,29 @@ public class GoogleManager : MonoBehaviour
         {
             Debug.Log("🔹 Previous Google session found, attempting auto-login...");
             isProcessingLogin = true;
-            
-            foreach (var o in objectsToDisable)
+
+            // 🔧 FIX: Null check for objects to disable
+            if (objectsToDisable != null)
             {
-                o.SetActive(false);
+                foreach (var o in objectsToDisable)
+                {
+                    if (o != null)
+                    {
+                        o.SetActive(false);
+                    }
+                }
             }
-            
-            // Trigger silent sign-in through your Firebase UI
-            FirebaseAuthUIController.Instance.OnClickSignInGoogle();
+
+            // 🔧 FIX: Null check for FirebaseAuthUIController
+            if (FirebaseAuthUIController.Instance != null)
+            {
+                FirebaseAuthUIController.Instance.OnClickSignInGoogle();
+            }
+            else
+            {
+                Debug.LogError("❌ FirebaseAuthUIController.Instance is null!");
+                isProcessingLogin = false;
+            }
         }
     }
 
@@ -113,12 +157,17 @@ public class GoogleManager : MonoBehaviour
         }
 
         if (isProcessingLogin) return; // Prevent duplicate processing
-        
+
         Debug.Log("✅ Current user loaded: " + user.DisplayName);
         isProcessingLogin = true;
-        
+
         PopulateUserData();
-        playFabManager.Login();
+
+        if (playFabManager != null)
+        {
+            playFabManager.Login();
+        }
+
         SceneManager.LoadScene("MenuScene");
     }
 
@@ -130,15 +179,18 @@ public class GoogleManager : MonoBehaviour
             return;
         }
 
-        if (isProcessingLogin)
-        {
-            UpdateStatus("⚠️ Login already in progress...");
-            return;
-        }
-
         UpdateStatus("🔹 Starting Google Sign-In...");
         isProcessingLogin = true;
-        FirebaseAuthUIController.Instance.OnClickSignInGoogle();
+
+        if (FirebaseAuthUIController.Instance != null)
+        {
+            FirebaseAuthUIController.Instance.OnClickSignInGoogle();
+        }
+        else
+        {
+            Debug.LogError("❌ FirebaseAuthUIController.Instance is null!");
+            isProcessingLogin = false;
+        }
     }
 
     // ✅ FIXED: Now ensures execution on main thread
@@ -181,12 +233,20 @@ public class GoogleManager : MonoBehaviour
             PlayerPrefs.SetString("unique_identifier", userID);
             PlayerPrefs.Save();
 
-            // Mark as logged in
-            GameManager.Instance.logged = true;
+            // 🔧 FIX: Null check for GameManager
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.logged = true;
+            }
 
             // Login to PlayFab and change scene
             UpdateStatus("✅ Login successful! Loading game...");
-            playFabManager.Login();
+
+            if (playFabManager != null)
+            {
+                playFabManager.Login();
+            }
+
             SceneManager.LoadScene("MenuScene");
         }
         catch (Exception e)
@@ -203,6 +263,13 @@ public class GoogleManager : MonoBehaviour
         if (user == null)
         {
             Debug.LogWarning("⚠️ Cannot populate user data - no current user");
+            return;
+        }
+
+        // 🔧 FIX: Null check for GameManager
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("❌ GameManager.Instance is null!");
             return;
         }
 
@@ -227,8 +294,12 @@ public class GoogleManager : MonoBehaviour
         {
             Texture2D tex = ((DownloadHandlerTexture)request.downloadHandler).texture;
             Sprite avatarSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
-            GameManager.Instance.avatarMy = avatarSprite;
-            Debug.Log("✅ Google Avatar Loaded Successfully!");
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.avatarMy = avatarSprite;
+                Debug.Log("✅ Google Avatar Loaded Successfully!");
+            }
         }
         else
         {
@@ -236,42 +307,16 @@ public class GoogleManager : MonoBehaviour
         }
     }
 
-    // 🔧 Public method that can be called from any scene
-    public void SignOutGoogle()
-    {
-        if (!isFirebaseReady)
-        {
-            Debug.LogWarning("⚠️ Cannot sign out - Firebase not ready");
-            return;
-        }
-
-        UpdateStatus("🔹 Signing out...");
-        
-        // 🔧 FIX: Set logout flag BEFORE signing out
-        PlayerPrefs.SetInt("HasLoggedOut", 1);
-        
-        // Sign out from Firebase
-        FirebaseAuth.DefaultInstance.SignOut();
-        
-        isProcessingLogin = false;
-        
-        UpdateStatus("✅ Signed out successfully");
-    }
 
     private void UpdateStatus(string message)
     {
         Debug.Log(message);
     }
-    
+
     private void OnDestroy()
     {
-        // Only unsubscribe if this is the singleton instance
-        if (Instance == this)
-        {
-            FirebaseCallbacks.SubscribeAppleSignInAndroidSuccess(OnAuthenticationFinished, false);
-            FirebaseCallbacks.SubscribeCurrentUserLoaded(OnCurrentUserLoaded, false);
-            FirebaseCallbacks.SubscribeFirebaseReady(OnFirebaseReady, false);
-            Instance = null;
-        }
+        FirebaseCallbacks.SubscribeGoogleSignInAndroidSuccess(OnAuthenticationFinished, false);
+        FirebaseCallbacks.SubscribeCurrentUserLoaded(OnCurrentUserLoaded, false);
+        FirebaseCallbacks.SubscribeFirebaseReady(OnFirebaseReady, false);
     }
 }
