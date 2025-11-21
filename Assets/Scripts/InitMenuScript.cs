@@ -252,7 +252,7 @@ public class InitMenuScript : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        Firebase.Auth.FirebaseAuth.DefaultInstance?.SignOut();
+        GoogleManager.Instance.SignOutGoogle();
         PlayerPrefs.SetInt("Forget", 1);
         SceneManager.LoadScene("LoginSplash");
     }

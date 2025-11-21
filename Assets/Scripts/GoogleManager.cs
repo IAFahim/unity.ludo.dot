@@ -10,6 +10,9 @@ using UnityEngine.SceneManagement;
 
 public class GoogleManager : MonoBehaviour
 {
+    // 🔧 Singleton Pattern
+    public static GoogleManager Instance { get; private set; }
+
     public GameObject[] objectsToDisable;
     public PlayFabManager playFabManager;
 
@@ -18,6 +21,14 @@ public class GoogleManager : MonoBehaviour
 
     private void Awake()
     {
+        // 🔧 Singleton implementation
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        Instance = this;
         DontDestroyOnLoad(this.gameObject);
         
         // Subscribe to Firebase callbacks
@@ -46,6 +57,16 @@ public class GoogleManager : MonoBehaviour
         if (isProcessingLogin)
         {
             Debug.LogWarning("⚠️ Already processing login");
+            return;
+        }
+
+        // 🔧 FIX: Check if user manually logged out
+        bool hasLoggedOut = PlayerPrefs.GetInt("HasLoggedOut", 0) == 1;
+        if (hasLoggedOut)
+        {
+            Debug.Log("🔹 User previously logged out - skipping auto-login");
+            PlayerPrefs.DeleteKey("HasLoggedOut"); // Clear the flag
+            PlayerPrefs.Save();
             return;
         }
 
@@ -215,6 +236,7 @@ public class GoogleManager : MonoBehaviour
         }
     }
 
+    // 🔧 Public method that can be called from any scene
     public void SignOutGoogle()
     {
         if (!isFirebaseReady)
@@ -225,37 +247,31 @@ public class GoogleManager : MonoBehaviour
 
         UpdateStatus("🔹 Signing out...");
         
+        // 🔧 FIX: Set logout flag BEFORE signing out
+        PlayerPrefs.SetInt("HasLoggedOut", 1);
+        
         // Sign out from Firebase
         FirebaseAuth.DefaultInstance.SignOut();
-        
-        // Clear saved data
-        PlayerPrefs.DeleteKey("LoggedType");
-        PlayerPrefs.DeleteKey("unique_identifier");
-        PlayerPrefs.Save();
-        
-        // Reset game state
-        GameManager.Instance.logged = false;
-        GameManager.Instance.nameMy = "";
-        GameManager.Instance.avatarMyUrl = "";
-        GameManager.Instance.avatarMy = null;
         
         isProcessingLogin = false;
         
         UpdateStatus("✅ Signed out successfully");
-        
-        // Optionally reload login scene
-        // SceneManager.LoadScene("LoginScene");
     }
 
     private void UpdateStatus(string message)
     {
         Debug.Log(message);
     }
+    
     private void OnDestroy()
     {
-        // Unsubscribe from callbacks to prevent memory leaks
-        FirebaseCallbacks.SubscribeAppleSignInAndroidSuccess(OnAuthenticationFinished, false);
-        FirebaseCallbacks.SubscribeCurrentUserLoaded(OnCurrentUserLoaded, false);
-        FirebaseCallbacks.SubscribeFirebaseReady(OnFirebaseReady, false);
+        // Only unsubscribe if this is the singleton instance
+        if (Instance == this)
+        {
+            FirebaseCallbacks.SubscribeAppleSignInAndroidSuccess(OnAuthenticationFinished, false);
+            FirebaseCallbacks.SubscribeCurrentUserLoaded(OnCurrentUserLoaded, false);
+            FirebaseCallbacks.SubscribeFirebaseReady(OnFirebaseReady, false);
+            Instance = null;
+        }
     }
 }
