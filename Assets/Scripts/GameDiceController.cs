@@ -159,6 +159,16 @@ public class GameDiceController : MonoBehaviour
         this.steps = steps;
         diceValueObject.SetActive(false);
         diceAnim.SetActive(true);
-        diceAnim.GetComponent<Animator>().Play("RollDiceAnimation");
+
+        // Get the Animator component
+        Animator animator = diceAnim.GetComponent<Animator>();
+
+        // Set a random speed for the animation
+        float randomSpeed = Random.Range(0.8f, 1.5f); // Adjust the range as needed
+        animator.speed = randomSpeed;
+
+        // Play the animation
+        animator.Play("RollDiceAnimation");
     }
+
 }
