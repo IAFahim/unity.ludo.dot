@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 using UnityEngine.Events;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace EasyUI.PickerWheelUI
 {
-
     public class PickerWheel : MonoBehaviour
     {
-
         [Header("References :")]
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private Transform linesParent;
@@ -40,11 +38,8 @@ namespace EasyUI.PickerWheelUI
         private UnityAction onSpinStartEvent;
         private UnityAction<WheelPiece> onSpinEndEvent;
 
-
         private bool _isSpinning = false;
-
         public bool IsSpinning { get { return _isSpinning; } }
-
 
         private Vector2 pieceMinSize = new Vector2(81f, 146f);
         private Vector2 pieceMaxSize = new Vector2(144f, 213f);
@@ -55,12 +50,12 @@ namespace EasyUI.PickerWheelUI
         private float halfPieceAngle;
         private float halfPieceAngleWithPaddings;
 
-
         private double accumulatedWeight;
         private System.Random rand = new System.Random();
 
         private List<int> nonZeroChancesIndices = new List<int>();
         public Text mycoin;
+
         private void Start()
         {
             pieceAngle = 360 / wheelPieces.Length;
@@ -68,24 +63,20 @@ namespace EasyUI.PickerWheelUI
             halfPieceAngleWithPaddings = halfPieceAngle - (halfPieceAngle / 4f);
 
             Generate();
-
             CalculateWeightsAndIndices();
+            
             if (nonZeroChancesIndices.Count == 0)
                 Debug.LogError("You can't set all pieces chance to zero");
 
-
             SetupAudio();
-
         }
+
         private void Update()
         {
-            // Get the transform component of the GameObject
             Transform pickerWheelTransform = GetComponent<Transform>();
-
-            // Set the scale to (2.2, 2.2, 2.2)
             pickerWheelTransform.localScale = new Vector3(1.5f, 1.5f, 1f);
-            // mycoin.text = PlayerPrefs.GetInt("coin", 0).ToString();
         }
+
         private void SetupAudio()
         {
             audioSource.clip = tickAudioClip;
@@ -130,10 +121,8 @@ namespace EasyUI.PickerWheelUI
             return Instantiate(wheelPiecePrefab, wheelPiecesParent.position, Quaternion.identity, wheelPiecesParent);
         }
 
-
         public void Spin()
         {
-
             if (!_isSpinning)
             {
                 _isSpinning = true;
@@ -149,55 +138,79 @@ namespace EasyUI.PickerWheelUI
                     piece = wheelPieces[index];
                 }
 
-                float angle = -(pieceAngle * index);
-
-                float rightOffset = (angle - halfPieceAngleWithPaddings) % 360;
-                float leftOffset = (angle + halfPieceAngleWithPaddings) % 360;
-
+                // Calculate the target angle to land on the selected piece
+                float angle = (pieceAngle * index);
+                float leftOffset = angle - halfPieceAngleWithPaddings;
+                float rightOffset = angle + halfPieceAngleWithPaddings;
                 float randomAngle = Random.Range(leftOffset, rightOffset);
 
-                Vector3 targetRotation = Vector3.back * (randomAngle + 2 * 360 * spinDuration);
+                // Add extra rotations for spinning effect
+                float targetAngle = (360 * spinDuration * 2) - randomAngle;
 
-                //float prevAngle = wheelCircle.eulerAngles.z + halfPieceAngle ;
-                float prevAngle, currentAngle;
-                prevAngle = currentAngle = wheelCircle.eulerAngles.z;
-
-                bool isIndicatorOnTheLine = false;
-
-                wheelCircle
-                .DORotate(targetRotation, spinDuration, RotateMode.Fast)
-                .SetEase(Ease.InOutQuart)
-                .OnUpdate(() => {
-                    float diff = Mathf.Abs(prevAngle - currentAngle);
-                    if (diff >= halfPieceAngle)
-                    {
-                        if (isIndicatorOnTheLine)
-                        {
-                            audioSource.PlayOneShot(audioSource.clip);
-                        }
-                        prevAngle = currentAngle;
-                        isIndicatorOnTheLine = !isIndicatorOnTheLine;
-                    }
-                    currentAngle = wheelCircle.eulerAngles.z;
-                })
-                .OnComplete(() => {
-                    _isSpinning = false;
-                    if (onSpinEndEvent != null)
-                        onSpinEndEvent.Invoke(piece);
-
-                    ShowRewardPanel(piece); // ✅ Added line to show reward panel
-
-                    onSpinStartEvent = null;
-                    onSpinEndEvent = null;
-                });
-
+                StartCoroutine(SpinCoroutine(targetAngle));
             }
+            
             PlayerPrefs.SetInt("myspin", 1);
         }
 
-        private void FixedUpdate()
+        private IEnumerator SpinCoroutine(float targetAngle)
         {
+            float startAngle = wheelCircle.eulerAngles.z;
+            float currentTime = 0f;
+            float prevAngle = startAngle;
+            bool isIndicatorOnTheLine = false;
 
+            while (currentTime < spinDuration)
+            {
+                currentTime += Time.deltaTime;
+                float t = currentTime / spinDuration;
+                
+                // Ease in-out curve
+                float easeT = t < 0.5f ? 2f * t * t : 1f - Mathf.Pow(-2f * t + 2f, 2f) / 2f;
+                
+                float currentAngle = Mathf.Lerp(startAngle, startAngle + targetAngle, easeT);
+                wheelCircle.eulerAngles = new Vector3(0, 0, currentAngle);
+
+                // Play tick sound
+                float diff = Mathf.Abs(prevAngle - currentAngle);
+                if (diff >= halfPieceAngle)
+                {
+                    if (isIndicatorOnTheLine && audioSource != null)
+                    {
+                        audioSource.PlayOneShot(audioSource.clip);
+                    }
+                    prevAngle = currentAngle;
+                    isIndicatorOnTheLine = !isIndicatorOnTheLine;
+                }
+
+                yield return null;
+            }
+
+            // Ensure final position
+            wheelCircle.eulerAngles = new Vector3(0, 0, startAngle + targetAngle);
+
+            // Calculate which piece the needle is pointing at based on final rotation
+            float finalAngle = (startAngle + targetAngle) % 360;
+            
+            // Normalize angle to 0-360
+            if (finalAngle < 0) finalAngle += 360;
+            
+            // The needle points at top (0 degrees), calculate which piece it's pointing at
+            // Since pieces are drawn clockwise, we need to find which piece range the angle falls into
+            int pieceIndex = Mathf.FloorToInt(finalAngle / pieceAngle);
+            pieceIndex = wheelPieces.Length - pieceIndex; // Reverse because wheel spins counter to piece layout
+            pieceIndex = pieceIndex % wheelPieces.Length;
+            
+            WheelPiece selectedPiece = wheelPieces[pieceIndex];
+
+            _isSpinning = false;
+            if (onSpinEndEvent != null)
+                onSpinEndEvent.Invoke(selectedPiece);
+
+            ShowRewardPanel(selectedPiece);
+
+            onSpinStartEvent = null;
+            onSpinEndEvent = null;
         }
 
         public void OnSpinStart(UnityAction action)
@@ -209,7 +222,6 @@ namespace EasyUI.PickerWheelUI
         {
             onSpinEndEvent = action;
         }
-
 
         private int GetRandomPieceIndex()
         {
@@ -228,21 +240,14 @@ namespace EasyUI.PickerWheelUI
             {
                 WheelPiece piece = wheelPieces[i];
 
-                //add weights:
                 accumulatedWeight += piece.Chance;
                 piece._weight = accumulatedWeight;
-
-                //add index :
                 piece.Index = i;
 
-                //save non zero chance indices:
                 if (piece.Chance > 0)
                     nonZeroChancesIndices.Add(i);
             }
         }
-
-
-
 
         private void OnValidate()
         {
@@ -253,8 +258,7 @@ namespace EasyUI.PickerWheelUI
                 Debug.LogError("[ PickerWheelwheel ]  pieces length must be between " + piecesMin + " and " + piecesMax);
         }
 
-
-        // ✅ NEWLY ADDED CODE BELOW (nothing removed or modified)
+        // Reward panel
         public GameObject rewardPanel;
         public Text rewardText;
 
@@ -266,16 +270,14 @@ namespace EasyUI.PickerWheelUI
             if (rewardText != null)
                 rewardText.text = "Congratulations! You will get " + piece.Amount + " coins";
 
-            // Auto-close after 3 seconds
             StartCoroutine(AutoCloseRewardPanel());
         }
 
-        private System.Collections.IEnumerator AutoCloseRewardPanel()
+        private IEnumerator AutoCloseRewardPanel()
         {
             yield return new WaitForSeconds(3f);
             if (rewardPanel != null)
                 rewardPanel.SetActive(false);
         }
-
     }
 }

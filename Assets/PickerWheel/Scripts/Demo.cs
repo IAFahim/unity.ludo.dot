@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using EasyUI.PickerWheelUI;
 using UnityEngine.UI;
-using System.Drawing;
+using System;
 
 public class Demo : MonoBehaviour
 {
@@ -13,10 +13,11 @@ public class Demo : MonoBehaviour
 
     private void Start()
     {
+        // Free spin button
         uiSpinButton.onClick.AddListener(() =>
         {
             uiSpinButton.interactable = false;
-            uiSpinButtonWatchad.interactable = false; // ✅ Disable WatchAd during spin
+            uiSpinButtonWatchad.interactable = false;
             uiSpinButtonText.text = "Spinning";
 
             pickerWheel.OnSpinEnd(wheelPiece =>
@@ -26,36 +27,13 @@ public class Demo : MonoBehaviour
                    + "\n <b>Amount:</b> " + wheelPiece.Amount + "      <b>Chance:</b> " + wheelPiece.Chance + "%"
                 );
 
-                if (wheelPiece.Index == 0)
-                {
-                    GameManager.Instance.playfabManager.addCoinsRequest(100);
-                }
-                if (wheelPiece.Index == 1)
-                {
-                    GameManager.Instance.playfabManager.addCoinsRequest(200);
-                }
-                if (wheelPiece.Index == 2)
-                {
-                    GameManager.Instance.playfabManager.addCoinsRequest(300);
-                }
-                if (wheelPiece.Index == 3)
-                {
-                    GameManager.Instance.playfabManager.addCoinsRequest(400);
-                }
-                if (wheelPiece.Index == 4)
-                {
-                    GameManager.Instance.playfabManager.addCoinsRequest(500);
-                }
+                AddCoinsBasedOnIndex(wheelPiece.Index);
 
-                uiSpinButton.interactable = true;
-                uiSpinButtonText.text = "Spin";
-
-                // ✅ After spin ends, enable WatchAd button again
-                uiSpinButtonWatchad.interactable = true;
-
-                // ✅ Save that user already did first spin
-                PlayerPrefs.SetInt("myspin", 1);
+                // Mark that user used their daily free spin
+                PlayerPrefs.SetString("LastFreeSpinDate", DateTime.Now.ToString("yyyy-MM-dd"));
                 PlayerPrefs.Save();
+
+                uiSpinButtonText.text = "Spin";
                 UpdateSpinButtons();
             });
 
@@ -72,13 +50,18 @@ public class Demo : MonoBehaviour
 
     private void UpdateSpinButtons()
     {
-        if (PlayerPrefs.GetInt("myspin", 0) == 0)
+        string lastSpinDate = PlayerPrefs.GetString("LastFreeSpinDate", "");
+        string todayDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+        // If user hasn't spun today, show free spin button
+        if (lastSpinDate != todayDate)
         {
             uiSpinButton.gameObject.SetActive(true);
             uiSpinButtonWatchad.gameObject.SetActive(false);
         }
         else
         {
+            // User already spun today, show ad button
             uiSpinButton.gameObject.SetActive(false);
             uiSpinButtonWatchad.gameObject.SetActive(true);
         }
@@ -86,10 +69,10 @@ public class Demo : MonoBehaviour
 
     public void watchad()
     {
-        // ✅ Disable button instantly to prevent multiple clicks
+        // Disable button to prevent multiple clicks
         uiSpinButtonWatchad.interactable = false;
 
-        // Show rewarded ad and call CompleteMethod when finished
+        // Show rewarded ad
         Gley.MobileAds.API.ShowRewardedVideo(CompleteMethod);
     }
 
@@ -101,28 +84,9 @@ public class Demo : MonoBehaviour
 
             pickerWheel.OnSpinEnd(wheelPiece =>
             {
-                if (wheelPiece.Index == 0)
-                {
-                    GameManager.Instance.playfabManager.addCoinsRequest(100);
-                }
-                if (wheelPiece.Index == 1)
-                {
-                    GameManager.Instance.playfabManager.addCoinsRequest(200);
-                }
-                if (wheelPiece.Index == 2)
-                {
-                    GameManager.Instance.playfabManager.addCoinsRequest(300);
-                }
-                if (wheelPiece.Index == 3)
-                {
-                    GameManager.Instance.playfabManager.addCoinsRequest(400);
-                }
-                if (wheelPiece.Index == 4)
-                {
-                    GameManager.Instance.playfabManager.addCoinsRequest(500);
-                }
+                AddCoinsBasedOnIndex(wheelPiece.Index);
 
-                // ✅ Re-enable WatchAd button after spin completes
+                // Re-enable ad button after spin completes
                 uiSpinButtonWatchad.interactable = true;
                 uiSpinButtonText.text = "Spin";
             });
@@ -131,9 +95,28 @@ public class Demo : MonoBehaviour
         }
         else
         {
-            // Ad not completed → re-enable button so user can retry
+            // Ad not completed, re-enable button
             uiSpinButtonWatchad.interactable = true;
             Debug.Log("Ad not completed — no spin");
+        }
+    }
+
+    private void AddCoinsBasedOnIndex(int index)
+    {
+        int coinsToAdd = 0;
+        
+        switch (index)
+        {
+            case 0: coinsToAdd = 100; break;
+            case 1: coinsToAdd = 200; break;
+            case 2: coinsToAdd = 300; break;
+            case 3: coinsToAdd = 400; break;
+            case 4: coinsToAdd = 500; break;
+        }
+
+        if (coinsToAdd > 0)
+        {
+            GameManager.Instance.playfabManager.addCoinsRequest(coinsToAdd);
         }
     }
 }
